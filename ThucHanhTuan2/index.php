@@ -1,3 +1,20 @@
+<?php
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "sinhvien";
+
+    // Tạo kết nối
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+    if ($conn->connect_error) {
+        $error_message = "Connection failed: " . $conn->connect_error;
+        echo $error_message; // Hiển thị thông điệp lỗi trực tiếp trên màn hình
+        error_log($error_message, 0); // Ghi thông điệp lỗi vào log
+        exit(); // Dừng việc thực thi mã tiếp theo
+    }
+
+    // Tiếp tục thực thi mã tiếp theo nếu kết nối thành công
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,34 +45,32 @@
             <th>Đăng ký</th>
         </tr>
         <?php
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "sinhvien";
-
-            // Tạo kết nối
-            $conn = mysqli_connect($servername, $username, $password, $dbname);
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
-
+            
             // Câu truy vấn SQL
-            $sql = "SELECT SinhVien.MSSV, SinhVien.HoTen, DangKy.Ky, DangKy.Status 
+            $sql = "SELECT SinhVien.MSSV, SinhVien.HoTen, DangKy.Ki, DangKy.Status 
                     FROM SinhVien INNER JOIN DangKy ON SinhVien.MSSV = DangKy.MSSV";
 
             $result = mysqli_query($conn, $sql);
-            if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<tr>";
-                    echo "<td>" . $row['MSSV'] . "</td>";
-                    echo "<td>" . $row['HoTen'] . "</td>";
-                    echo "<td>" . $row['Ky'] . "</td>";
-                    echo "<td>" . $row['Status'] . "</td>";
-                    echo "</tr>";
+            if ($result) {
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo "<tr>";
+                        echo "<td>" . $row['MSSV'] . "</td>";
+                        echo "<td>" . $row['HoTen'] . "</td>";
+                        echo "<td>" . $row['Ki'] . "</td>";
+                        echo "<td>" . $row['Status'] . "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='4'>0 results</td></tr>";
                 }
             } else {
-                echo "<tr><td colspan='4'>0 results</td></tr>";
+                $error_message = "Query failed: " . mysqli_error($conn);
+                echo $error_message; // Hiển thị thông điệp lỗi trực tiếp trên màn hình
+                error_log($error_message, 0); // Ghi thông điệp lỗi vào log
             }
+
+            // Đóng kết nối
             $conn->close();
         ?>
     </table>
