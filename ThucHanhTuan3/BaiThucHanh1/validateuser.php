@@ -22,7 +22,7 @@
             // Đăng nhập thành công, chuyển hướng hoặc thực hiện các thao tác khác
             echo "Login successful!";
             echo "Hello, ".$username_input."! <br>";
-            echo "<form action='' method='post'>
+            echo "<form action='logout.php' method='post'>
                   <input type='submit' name='logout' value='Logout'>
               </form>";
         } else {
@@ -31,13 +31,6 @@
                     alert('Invalid username or password!');
                     window.location.href = 'login.html';
                 </script>";
-        }
-        if(isset($_POST['logout'])) {
-            // Hủy session
-            session_destroy();
-            // Chuyển hướng về trang đăng nhập
-            header('Location: login.html');
-            exit();
         }
     }
     mysqli_close($conn);
