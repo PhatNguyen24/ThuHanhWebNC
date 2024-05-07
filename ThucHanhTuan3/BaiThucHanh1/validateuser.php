@@ -9,6 +9,10 @@
         die("Connection failed: " . mysqli_connect_error());
     }
 
+    if(!isset($_SESSION["IsLogin"])){
+        $_SESSION["IsLogin"] = false;
+    }
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Lấy dữ liệu từ form
         $username_input = $_POST["username"];
@@ -20,6 +24,7 @@
 
         if (mysqli_num_rows($result) > 0) {
             // Đăng nhập thành công, chuyển hướng hoặc thực hiện các thao tác khác
+            $_SESSION["IsLogin"] = true
             echo "Login successful!";
         } else {
             // Đăng nhập không thành công, quay lại trang đăng nhập
