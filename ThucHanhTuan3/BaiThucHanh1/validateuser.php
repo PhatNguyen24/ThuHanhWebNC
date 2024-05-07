@@ -26,11 +26,15 @@
             // Đăng nhập thành công, chuyển hướng hoặc thực hiện các thao tác khác
             $_SESSION["IsLogin"] = true
             echo "Login successful!";
+            echo "Hello, ".$username_input."! <br>";
+            echo "<form action='logout.php' method='post'>
+                  <input type='submit' name='logout' value='Logout'>
+              </form>";
         } else {
             // Đăng nhập không thành công, quay lại trang đăng nhập
             echo "<script>
                     alert('Invalid username or password!');
-                    window.location.href = 'index.html';
+                    window.location.href = 'login.html';
                 </script>";
         }
     }
